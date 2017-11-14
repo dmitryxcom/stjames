@@ -2,7 +2,6 @@
 
 import {fetchJson} from '../fetch.js';
 import {HueRequestAuthAction, HueResponseAuth, HueResponseUpnp} from './typings';
-import {getApiUrl, HueApiAction} from './huehelpers.js';
 import {HUE_BRIDGE_IP, HUE_UPNP_DISCOVERY_SERVER, HUE_APP_DEVICE_TYPE as APP_DEVICE_TYPE, HUE_LOCAL_STORAGE_PREFIX as LOCAL_STORAGE_PREFIX, HUE_ENABLE_DEBUG as ENABLE_DEBUG} from '../config.js'
 import {HueApi} from './hueapi.js';
 
@@ -22,8 +21,8 @@ export function initHue(): Promise<HueApi> {
     })
     .then(([brdigeIp, username]) => {
       console.log(`Hue is ready: ${username}@${brdigeIp}`);
-      return new HueApi(brdigeIp, username);
-    })
+      return new HueApi(brdigeIp, username, {enableDebug: ENABLE_DEBUG});
+    });
 }
 
 
@@ -57,7 +56,7 @@ function getHueUsername(bridgeIp: string): Promise<string> {
 
 
 function authenticateUser(bridgeIp: string): Promise<string> {
-  const authUrl = getApiUrl(bridgeIp, HueApiAction.AUTH);
+  const authUrl = `http://${bridgeIp}/auth`;
   const body: HueRequestAuthAction = {devicetype: APP_DEVICE_TYPE};
   const bodyJson = JSON.stringify(body);
   const options: RequestInit = {

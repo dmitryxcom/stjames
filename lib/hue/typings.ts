@@ -15,7 +15,30 @@ export interface HueResponseAuth {
 }
 
 
-export interface HueResponseLights {}
+export interface HueResponseLights {
+  [index: string]: HueResponseLight;
+}
+
+export interface HueResponseLight {
+  name: string;
+  uniqueid: string;
+  state: HueResponseLightsState;
+}
+
+
+export interface HueResponseLightsState {
+  on: boolean;
+  bri: number; // 0 - 254
+  hue: number; // 0 (red) - 25500 (green) - 46920 (blue) - 65535 (red)
+  sat: number; // 0 - 254
+  xy: [number, number]; // CIE color space x, y.
+  ct: number; // The Mired Color temperature.
+  alert: 'none' | 'select' | 'lsecect';
+  effect: 'none' | 'colorloop';
+  colormode: 'hs' | 'xy' | 'ct';
+  reachable: boolean;
+}
+
 
 
 export interface HueRequestAuthAction {

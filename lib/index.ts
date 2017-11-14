@@ -12,8 +12,25 @@ document.getElementById('initHueBtn').addEventListener('click', () => {initHue()
 const midiPromise = initMidi();
 const huePormise = initHue();
 
+const lightsConfig = {
+  '5': 'living far strip',
+  '6': 'books',
+  '8': 'living far under strip',
+  '9': 'sofa strip',
+  '13': 'piano r1',
+  '14': 'piano r3',
+  '15': 'piano l2',
+  '16': 'piano r2',
+  '17': 'piano l1',
+  '18': 'piano l3',
+  '19': 'sofa bl',
+  '20': 'sofa br',
+};
+
 Promise.all([midiPromise, huePormise]).then(([midiApi, hueApi]) => {
-  console.log('lets party', midiApi, hueApi);
+  midiApi.addListener((n) => {
+    console.log(n.codes[0]);
+  })
+  hueApi.setLights(lightsConfig);
+
 });
-
-
