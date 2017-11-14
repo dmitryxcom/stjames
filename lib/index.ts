@@ -30,7 +30,11 @@ const lightsConfig = {
 Promise.all([midiPromise, huePormise]).then(([midiApi, hueApi]) => {
   midiApi.addListener((n) => {
     console.log(n.codes[0]);
-  })
-  hueApi.setLights(lightsConfig);
-
+  });
+  hueApi.setLights(lightsConfig).then(party);
 });
+
+
+function party() {
+  console.log('okay, now let\'s party');
+}
