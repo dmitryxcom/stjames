@@ -1,6 +1,6 @@
 /** @fileoverview Hue bridge API. see https://developers.meethue.com/documentation/getting-started */
 
-import {fetchJson} from '../fetch';
+import {fetchJson} from '../util/fetch';
 import {HueRequestAuthAction, HueResponseAuth, HueResponseUpnp} from './typings';
 import {HUE_BRIDGE_IP, HUE_UPNP_DISCOVERY_SERVER, HUE_APP_DEVICE_TYPE as APP_DEVICE_TYPE, HUE_LOCAL_STORAGE_PREFIX as LOCAL_STORAGE_PREFIX, HUE_ENABLE_DEBUG as ENABLE_DEBUG} from '../config'
 import {HueApi} from './hueapi';

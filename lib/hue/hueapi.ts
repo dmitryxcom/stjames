@@ -1,5 +1,5 @@
 /** Hue API class. Provides functionality to run an light change. */
-import {fetchJson} from '../fetch';
+import {fetchJson} from '../util/fetch';
 import {HueResponseLights} from './typings';
 
 export interface LightsConfig {
