@@ -1,8 +1,9 @@
 /** Hue API class. Provides functionality to run an light change. */
 import {fetchJson} from '../util/fetch';
-import {HueResponseLights} from './typings';
+import {HueRequestLightState, HueResponseLights, HueResponseLightStateChange} from './typings';
 
-export interface LightsConfig {
+
+export type LightsConfig  = {
   // Map hue indices to aliases;
   [index: string]: string;
 }
@@ -11,6 +12,21 @@ export interface LightsConfig {
 export interface HueApiConfig {
   enableDebug?: boolean;
 }
+
+
+export type LightChangeSet = Array<LightChange>;
+
+
+export interface LightChange {
+  id: string,
+  on?: boolean;
+  bri?: number;
+  xy?: [number, number];
+  t?: number;
+}
+
+const DEFAULT_TRANSITION_TIME = 0;
+
 
 export class HueApi {
   private lights: HueApiLights = {};
@@ -33,21 +49,122 @@ export class HueApi {
         if (!hueLight.state.reachable) {
           throw new Error(`Light with index ${lightIndex} is unreachable.`);
         }
-        const light: HueApiLight = {
+        const hueState = hueLight.state;
+        const lightState: HueApiLightState = {
+          on: hueState.on,
+          bri: hueState.bri,
+          x: hueState.xy[0],
+          y: hueState.xy[1],
+        };
+        this.lights[lightAlias] = {
           index: lightIndex,
           alias: lightAlias,
-          state: {on: hueLight.state.on},
+          state: lightState,
         };
-        this.lights[lightAlias] = light;
       }
       if (this.config.enableDebug) {
-        console.debug('Lights are set.', this.lights)
+        console.debug('Lights are set.', this.lights);
+      }
+    });
+  }
+
+  changeLights(changeSet: LightChangeSet) {
+    // TODO: add one global promise to queue changesets.
+    for (const changeRequest of changeSet) {
+      const change = this.diffChange(changeRequest);
+      if (!change) continue;
+      const lightIndex = this.lights[changeRequest.id].index;
+      const url = this.getSetLightStateUrl(lightIndex);
+      const bodyJson = JSON.stringify(change);
+      const options: RequestInit = {
+        method: 'PUT',
+        body: bodyJson,
+      };
+      console.log('about to reqeuest', url);
+      fetchJson<HueResponseLightStateChange>(url, options).then((responseJson) => {
+        this.onStateChangeResponse(responseJson, changeRequest.id);
+        if (this.config.enableDebug) {
+          console.debug(`Light ${changeRequest.id} updated`, changeRequest, this.lights[changeRequest.id].state);
+        }
+      });
+    }
+  }
+
+  private diffChange(change: LightChange): HueRequestLightState|null {
+    const light = this.lights[change.id];
+    if (!light) {
+      throw new Error(`Requested change on an unregistered light: ${change.id}`);
+    }
+    const state = light.state;
+    const diffBri = (change.bri != undefined && state.bri != change.bri) ?  change.bri : null;
+    const diffXy = (change.xy && (state.x != change.xy[0] || state.y != change.xy[1])) ? change.xy: null;
+    if (change.on != undefined || !state.on) {
+      // New state is not specified or the light is off.
+      if (change.on == undefined || (change.on && !state.on)) {
+        // Light is off, turning it on, must force brightness.
+        const bri = diffBri != null ? diffBri : state.bri;
+        const result = HueApi.createChangeRequest(bri, diffXy, change.t);
+        result.on = true;
+        return result;
+      }
+      if (!change.on && !state.on) {
+        // Light is off, no further changes.
+        console.error(`Requesting to turn off the light that is already off: ${light.alias}`);
+        return null;
+      }
+      if (!change.on && state.on) {
+        // Requesting to turn off.
+        const t = change.t != undefined ? change.t : DEFAULT_TRANSITION_TIME;
+        return {on: false, transitiontime: t};
+      }
+    }
+    // Light is on, only change state, if different.
+    return HueApi.createChangeRequest(diffBri, diffXy, change.t);
+  }
+
+  private onStateChangeResponse(responseJson: HueResponseLightStateChange, alias: string) {
+    Array.from(responseJson).forEach((item) => {
+      if (!item.success) {
+        const reason = item.error ? item.error.description : 'unknown reason';
+        console.error(`Error changing the light state: ${reason}`);
+      }
+      const resource = Object.keys(item.success)[0];
+      const rawValue = item.success[resource];
+      const state = this.lights[alias].state;
+      if (resource.endsWith(('on'))) {
+        state.on = (rawValue as boolean);
+      } else if (resource.endsWith('bri')) {
+        state.bri = (rawValue as number);
+      } else if (resource.endsWith('xy')) {
+        state.x = (rawValue as [number, number])[0];
+        state.y = (rawValue as [number, number])[1];
       }
     });
   }
 
   private getUrl(action: HueApiAction) {
     return `http://${this.bridgeIp}/api/${this.username}/${action}`;
+  }
+
+  private getSetLightStateUrl(index: string) {
+    let url = this.getUrl(HueApiAction.LIGHTS);
+    return `${url}/${index}/state`;
+  }
+
+  private static createChangeRequest(
+      diffBri: number|null, diffXy: [number, number]|null, t?: number): HueRequestLightState|null {
+    if (diffBri == null && diffXy == null) {
+      return null;
+    }
+    const result: HueRequestLightState = {};
+    if (diffBri != null) {
+      result.bri = diffBri;
+    }
+    if (diffXy) {
+      result.xy = diffXy;
+    }
+    result.transitiontime = t != undefined ? t : DEFAULT_TRANSITION_TIME;
+    return result;
   }
 }
 
@@ -63,6 +180,9 @@ interface HueApiLight {
 
 interface HueApiLightState {
   on: boolean;
+  bri: number;
+  x: number;
+  y: number;
 }
 
 enum HueApiAction {

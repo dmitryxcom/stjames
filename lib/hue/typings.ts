@@ -5,12 +5,12 @@ export interface HueResponseUpnp {
 
 export interface HueResponseAuth {
   [0]: {
-    success?: {username: string},
+    success?: {username: string};
     error?: {
-      type: number,
-      address: string,
-      description: string,
-    },
+      type: number;
+      address: string;
+      description: string;
+    };
   };
 }
 
@@ -39,8 +39,32 @@ export interface HueResponseLightsState {
   reachable: boolean;
 }
 
+export type HueResponseLightStateChange = Array<HueResponseLightStateChangeItem>;
+
+export interface HueResponseLightStateChangeItem {
+  success?: {
+    [index: string]: any;
+  };
+  error?: {
+    type: number;
+    address: string;
+    description: string;
+  };
+}
 
 
 export interface HueRequestAuthAction {
   devicetype: string;
+}
+
+export interface HueRequestLightState {
+  on?: boolean;
+  bri?: number; // 0 - 254
+  hue?: number; // 0 (red) - 25500 (green) - 46920 (blue) - 65535 (red)
+  sat?: number; // 0 - 254
+  xy?: [number, number]; // CIE color space x, y.
+  ct?: number; // The Mired Color temperature.
+  alert?: 'none' | 'select' | 'lsecect';
+  effect?: 'none' | 'colorloop';
+  transitiontime?: number;
 }
