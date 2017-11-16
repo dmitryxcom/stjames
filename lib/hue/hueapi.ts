@@ -1,6 +1,6 @@
 /** Hue API class. Provides functionality to run an light change. */
-import {fetchJson} from '../fetch.js';
-import {HueResponseLight, HueResponseLights} from './typings.js';
+import {fetchJson} from '../fetch';
+import {HueResponseLights} from './typings';
 
 export interface LightsConfig {
   // Map hue indices to aliases;
@@ -37,7 +37,7 @@ export class HueApi {
           index: lightIndex,
           alias: lightAlias,
           state: {on: hueLight.state.on},
-        }
+        };
         this.lights[lightAlias] = light;
       }
       if (this.config.enableDebug) {

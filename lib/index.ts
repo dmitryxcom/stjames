@@ -1,6 +1,6 @@
 // .js is because TSC is fucking stupid.
-import {initMidi} from './midi/midi.js';
-import {initHue} from './hue/hue.js';
+import {initMidi} from './midi/midi';
+import {initHue} from './hue/hue';
 
 // DEBUG INFO:
 // http://192.168.1.39/debug/clip.html

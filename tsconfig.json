@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "module": "es6",
+    "module": "amd",
     "target": "es2016",
     "sourceMap": true,
+    "noImplicitAny": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "third_party"
   ]
 }
