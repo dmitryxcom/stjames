@@ -2,6 +2,7 @@
 import {initMidi} from './midi/midi';
 import {initHue} from './hue/hue';
 import {ShowDirector} from './show/showdirector';
+import {score} from './score';
 
 // DEBUG INFO:
 // http://192.168.1.39/debug/clip.html
@@ -14,6 +15,6 @@ const midiPromise = initMidi();
 const huePormise = initHue();
 
 Promise.all([midiPromise, huePormise]).then(([midiApi, hueApi]) => {
-  const director = new ShowDirector(midiApi, hueApi);
+  const director = new ShowDirector(midiApi, hueApi, score);
   director.start();
 });

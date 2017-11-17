@@ -7,6 +7,6 @@ export type Score = ScoreNote[];
 
 export type ScoreNote = {
   note: PitchCode;
-  on: LightChangeSet;
-  off: LightChangeSet;
+  on?: LightChangeSet;
+  off?: LightChangeSet;
 }
