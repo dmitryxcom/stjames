@@ -1,7 +1,7 @@
 /** @filevoerview Show director. */
 import {MidiApi} from '../midi/midiapi';
 import {HueApi, LightChangeSet} from '../hue/hueapi';
-import {L, lightsConfig} from './config';
+import {L, lightsConfig} from './lightsconfig';
 import {Note, NoteState} from '../midi/types';
 
 export class ShowDirector {
