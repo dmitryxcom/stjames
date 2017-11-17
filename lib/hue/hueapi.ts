@@ -14,7 +14,7 @@ export interface HueApiConfig {
 }
 
 
-export type LightChangeSet = Array<LightChange>;
+export type LightChangeSet = LightChange[];
 
 
 export interface LightChange {

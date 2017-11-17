@@ -1,7 +1,8 @@
 /** @filevoerview Show director. */
-import {MidiApi, Note, NoteState} from '../midi/midiapi';
+import {MidiApi} from '../midi/midiapi';
 import {HueApi, LightChangeSet} from '../hue/hueapi';
 import {L, lightsConfig} from './config';
+import {Note, NoteState} from '../midi/types';
 
 export class ShowDirector {
   private changeGen: Iterator<LightChangeSet> = changesGenerator();
@@ -26,7 +27,7 @@ export class ShowDirector {
   }
 }
 
-const score: Array<LightChangeSet> = [
+const score: LightChangeSet[] = [
   [
     {id: L.BOOK, on: true, xy: [0.1541, 0.0808], bri: 38, t: 0},
   ],

@@ -39,7 +39,7 @@ export interface HueResponseLightsState {
   reachable: boolean;
 }
 
-export type HueResponseLightStateChange = Array<HueResponseLightStateChangeItem>;
+export type HueResponseLightStateChange = HueResponseLightStateChangeItem[];
 
 export interface HueResponseLightStateChangeItem {
   success?: {
