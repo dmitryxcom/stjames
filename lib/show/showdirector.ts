@@ -20,7 +20,13 @@ export class ShowDirector {
       });
   }
 
-  initiliazeMidiListener() {
+  reset() {
+    console.log('Resetting the show.');
+    this.scoreIterator = undefined;
+    this.nextScoreNote();
+  }
+
+  private initiliazeMidiListener() {
     this.midi.addListener((note) => {this.onMidiNote(note)});
   }
 

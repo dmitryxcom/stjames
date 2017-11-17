@@ -17,4 +17,7 @@ const huePormise = initHue();
 Promise.all([midiPromise, huePormise]).then(([midiApi, hueApi]) => {
   const director = new ShowDirector(midiApi, hueApi, score);
   director.start();
+  document.getElementById('resetShowBtn').addEventListener('click', () => {
+    director.reset()
+  });
 });
