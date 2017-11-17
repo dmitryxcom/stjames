@@ -1,0 +1,1 @@
+// define score type here
