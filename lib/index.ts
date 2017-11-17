@@ -18,21 +18,30 @@ enum L  {
   BOOK = 'book',
   UP = 'ltop',
   DOWN = 'lbot',
+  SFA = 'sofa',
+  SFL = 'sofal',
+  SFR = 'sofar',
+  PL1 = 'pl1',
+  PL2 = 'pl2',
+  PL3 = 'pl3',
+  PR1 = 'pr1',
+  PR2 = 'pr2',
+  PR3 = 'pr3',
 }
 
 const lightsConfig = {
   '6': L.BOOK,
   '5': L.UP,
   '8': L.DOWN,
-  '9': 'sofa strip',
-  '13': 'piano r1',
-  '14': 'piano r3',
-  '15': 'piano l2',
-  '16': 'piano r2',
-  '17': 'piano l1',
-  '18': 'piano l3',
-  '19': 'sofa bl',
-  '20': 'sofa br',
+  '9': L.SFA,
+  '19': L.SFL,
+  '20': L.SFR,
+  '17': L.PL1,
+  '15': L.PL2,
+  '18': L.PL3,
+  '13': L.PR1,
+  '16': L.PR2,
+  '14': L.PR3,
 };
 
 const lightChanges: Array<LightChangeSet> = [
@@ -40,14 +49,13 @@ const lightChanges: Array<LightChangeSet> = [
     {id: L.BOOK, on: true, xy: [0.1541, 0.0808], bri: 38, t: 0},
   ],
   [
-    {id: L.UP, on: true, xy: [0.3019, 0.3067], bri: 165, t: 10},
-    {id: L.DOWN, on: true, xy: [0.1824, 0.447], bri: 254, t: 5},
+    {id: L.UP, on: true, xy: [0.3019, 0.3067], bri: 165, t: 0},
+    {id: L.DOWN, on: true, xy: [0.1824, 0.447], bri: 254, t: 0},
   ],
   [
     {id: L.BOOK, on: false},
     {id: L.UP, on: false, t: 5},
     {id: L.DOWN, on: false, t: 5},
-
   ],
 ];
 
@@ -68,7 +76,6 @@ Promise.all([midiPromise, huePormise]).then(([midiApi, hueApi]) => {
     midiApi.addListener((n) => {
       if (n.state == NoteState.ON) {
         const change = changeGen.next().value;
-        console.log('next change', change.length);
         hueApi.changeLights(change);
       }
     });
