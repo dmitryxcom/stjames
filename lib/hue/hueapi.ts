@@ -80,7 +80,6 @@ export class HueApi {
         method: 'PUT',
         body: bodyJson,
       };
-      console.log('about to reqeuest', url);
       fetchJson<HueResponseLightStateChange>(url, options).then((responseJson) => {
         this.onStateChangeResponse(responseJson, changeRequest.id);
         if (this.config.enableDebug) {
