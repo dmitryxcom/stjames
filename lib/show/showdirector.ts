@@ -1,14 +1,15 @@
 /** @filevoerview Show director. */
 import {MidiApi} from '../midi/midiapi';
-import {HueApi} from '../hue/hueapi';
+import {HueApi, LightChangeSet} from '../hue/hueapi';
 import {lightsConfig} from './lightsconfig';
-import {Note, NoteState} from '../midi/types';
+import {Note, NoteState, PitchCode} from '../midi/types';
 import {Score, ScoreNote} from './score';
 import {SHOW_ENABLE_DEBUG} from '../config';
 
 export class ShowDirector {
   private scoreIterator: Iterator<ScoreNote>|undefined;
   private scoreNote: ScoreNote|undefined;
+  private offNoteHandlers: PitchCodeToChangeSetMap = {};
 
   constructor(private midi: MidiApi, private hue: HueApi, private score: Score) {}
 
@@ -31,6 +32,10 @@ export class ShowDirector {
   }
 
   private onMidiNote(note: Note) {
+    if (note.state == NoteState.OFF) {
+      this.playOffNote(note);
+      return;
+    }
     if (!this.scoreNote) {
       // No notes further.
       return;
@@ -39,21 +44,32 @@ export class ShowDirector {
       // Not interesting.
       return;
     }
-    if (note.state == NoteState.ON && this.scoreNote.on) {
+    if (this.scoreNote.on) {
       if (SHOW_ENABLE_DEBUG) {
         console.debug('Show note playing on', this.scoreNote);
       }
+      this.addOffNote();
       this.hue.changeLights(this.scoreNote.on);
+      this.nextScoreNote();
       return;
     }
-    if (note.state == NoteState.OFF) {
-      if (this.scoreNote.off) {
-        if (SHOW_ENABLE_DEBUG) {
-          console.debug('Show note playing off', this.scoreNote);
-        }
-        this.hue.changeLights(this.scoreNote.off);
+  }
+
+  private addOffNote() {
+    if (!this.scoreNote.off) {
+      return;
+    }
+    this.offNoteHandlers[this.scoreNote.note] = this.scoreNote.off;
+  }
+
+  private playOffNote(note: Note) {
+    for (const code of Object.keys(this.offNoteHandlers)) {
+      if (!note.codes.includes((code as PitchCode))) {
+        continue;
       }
-      this.nextScoreNote();
+      const changeSet = this.offNoteHandlers[code];
+      delete this.offNoteHandlers[code];
+      this.hue.changeLights(changeSet);
     }
   }
 
@@ -76,13 +92,6 @@ export class ShowDirector {
   }
 }
 
-function* changesGenerator() {
-  let i = 0;
-  while (true) {
-    const change = 3;
-    if (++i == 5) {
-      i = 0;
-    }
-    yield change;
-  }
+interface PitchCodeToChangeSetMap {
+  [key: string]: LightChangeSet;
 }
