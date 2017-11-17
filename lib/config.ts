@@ -8,4 +8,4 @@ export const HUE_BRIDGE_IP = ''; // If empty, N-UPnP discovery will be used.
 export const HUE_UPNP_DISCOVERY_SERVER = 'https://www.meethue.com/api/nupnp';
 export const HUE_APP_DEVICE_TYPE = 'stjames#web';
 export const HUE_LOCAL_STORAGE_PREFIX = 'stJames-hue';
-export const HUE_ENABLE_DEBUG = true;
+export const HUE_ENABLE_DEBUG = false;
