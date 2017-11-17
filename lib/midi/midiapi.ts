@@ -1,30 +1,4 @@
-/** @fileoverview MIDI API bits. */
-
-export interface MidiApiConfig {
-  midiRangeStart: number;
-  midiRangeEnd: number;
-  portId?: string;
-  enableDebug?: boolean;
-}
-
-
-export enum NoteState {
-  ON = 'on',
-  OFF = 'off'
-}
-
-
-export interface Note {
-  state: NoteState;
-  pitch: number;
-  velo: number;
-  codes: string[];
-}
-
-
-export interface NoteCallback {
-  (note: Note): void;
-}
+import {MidiApiConfig, Note, NoteCallback, NoteState, PitchCode} from './types';
 
 
 const MIDI_CMD_ON = 0x90;
@@ -32,7 +6,7 @@ const MIDI_CMD_OFF = 0x80;
 
 
 interface PitchCodeMap {
-  [index: number]: string[];
+  [index: number]: PitchCode[];
 }
 
 
@@ -110,12 +84,12 @@ function buildPitchCodeMap(midiRangeStart: number, midiRangeEnd: number): PitchC
   for (let i = midiRangeStart; i <= midiRangeEnd; i++) {
     const octave = Math.floor(i / 12);
     const pitches = PITCHES[i % 12];
-    const codes = pitches.map((p) => `${octave}${p}`);
+    const codes: PitchCode[] = pitches.map((p) => (`${octave}${p}` as PitchCode));
     if (i % 12 == 0) {
-      codes.push(`${octave - 1}${PITCH_0_UNDER}`);
+      codes.push((`${octave - 1}${PITCH_0_UNDER}` as PitchCode));
     }
     if (i % 12 == 11) {
-      codes.push(`${octave + 1}${PITCH_11_ABOVE}`);
+      codes.push((`${octave + 1}${PITCH_11_ABOVE}` as PitchCode));
     }
     result[i] = codes;
   }
@@ -125,9 +99,4 @@ function buildPitchCodeMap(midiRangeStart: number, midiRangeEnd: number): PitchC
 
 function noteToString(note: Note): string {
   return `${note.state} [${note.codes.join(',')}] (${note.velo})`;
-}
-
-
-function noteToPrimaryString(note: Note): string {
-  return `${note.state} ${note.codes} (${note.velo})`;
 }
