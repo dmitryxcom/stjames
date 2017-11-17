@@ -4,6 +4,7 @@ import {HueApi} from '../hue/hueapi';
 import {lightsConfig} from './lightsconfig';
 import {Note, NoteState} from '../midi/types';
 import {Score, ScoreNote} from './score';
+import {SHOW_ENABLE_DEBUG} from '../config';
 
 export class ShowDirector {
   private scoreIterator: Iterator<ScoreNote>|undefined;
@@ -24,22 +25,29 @@ export class ShowDirector {
   }
 
   private onMidiNote(note: Note) {
-    // if (note.code != this.scoreNote.note)
-    //    return;
-    //  if (note.state == ON && this.scoreNote.on) {
-    //    changeLigths()
-    //    if (!this.scoreNote.off) {nextNote()}
-    //  }
-    //  if (note.state == OFF && this.scoreNote.off) {
-    //    changeLights();
-    //    nextNote();
-    //  }
-    //   if this.nextNote.ON
-    if (note.state == NoteState.ON) {
-      console.log('current note', this.scoreNote);
+    if (!this.scoreNote) {
+      // No notes further.
+      return;
+    }
+    if (!note.codes.includes(this.scoreNote.note)) {
+      // Not interesting.
+      return;
+    }
+    if (note.state == NoteState.ON && this.scoreNote.on) {
+      if (SHOW_ENABLE_DEBUG) {
+        console.debug('Show note playing on', this.scoreNote);
+      }
+      this.hue.changeLights(this.scoreNote.on);
+      return;
+    }
+    if (note.state == NoteState.OFF) {
+      if (this.scoreNote.off) {
+        if (SHOW_ENABLE_DEBUG) {
+          console.debug('Show note playing off', this.scoreNote);
+        }
+        this.hue.changeLights(this.scoreNote.off);
+      }
       this.nextScoreNote();
-      //const change = this.changeGen.next().value;
-      //this.hue.changeLights(change);
     }
   }
 
@@ -52,6 +60,9 @@ export class ShowDirector {
       console.log('Show\'s over!');
     }
     this.scoreNote = next.value;
+    if (SHOW_ENABLE_DEBUG) {
+      console.debug('Next note is', this.scoreNote);
+    }
   }
 
   private *getScoreIterator() {
