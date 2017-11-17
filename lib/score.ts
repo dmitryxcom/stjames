@@ -3,20 +3,20 @@ import {L} from './show/lightsconfig';
 
 const m1: Score = [
   {
-    note: '3Eb',
+    note: '4Eb',
     on: [
       {id: L.BOOK, xy: [0.1541, 0.0808], bri: 38},
     ],
   },
   {
-    note: '3G',
+    note: '4G',
     on: [
       {id: L.UP, xy: [0.3019, 0.3067], bri: 165},
       {id: L.DOWN, xy: [0.1824, 0.447], bri: 254},
     ],
   },
   {
-    note: '3Eb',
+    note: '4Eb',
     on: [
       {id: L.BOOK, on: false},
       {id: L.UP, on: false, t: 5},
@@ -32,7 +32,7 @@ const m1: Score = [
 
 const m2: Score = [
   {
-    note: '3D',
+    note: '4D',
     on: [
       {id: L.BOOK, xy: [0.1, 0.3], bri: 254},
     ],

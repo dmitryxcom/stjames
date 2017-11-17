@@ -82,7 +82,7 @@ const PITCH_11_ABOVE = 'Cb';
 function buildPitchCodeMap(midiRangeStart: number, midiRangeEnd: number): PitchCodeMap {
   const result: PitchCodeMap = {};
   for (let i = midiRangeStart; i <= midiRangeEnd; i++) {
-    const octave = Math.floor(i / 12);
+    const octave = Math.floor(i / 12) - 1;
     const pitches = PITCHES[i % 12];
     const codes: PitchCode[] = pitches.map((p) => (`${octave}${p}` as PitchCode));
     if (i % 12 == 0) {
