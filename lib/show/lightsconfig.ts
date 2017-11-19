@@ -1,5 +1,6 @@
 export enum L  {
   BOOK = 'book',
+  BDR = 'bdr',
   UP = 'ltop',
   DOWN = 'lbot',
   SFA = 'sofa',
@@ -19,6 +20,7 @@ export enum L  {
 export const lightsConfig = {
   '1': L.TVT,
   '6': L.BOOK,
+  '7': L.BDR,
   '5': L.UP,
   '8': L.DOWN,
   '9': L.SFA,
