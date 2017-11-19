@@ -6,6 +6,8 @@ const m1: Score = [
     note: '4Eb',
     on: [
       {id: L.BOOK, on: true, bri: 254},
+      {id: L.TVT, on: true, bri: 254},
+      {id: L.TVS, on: true, bri: 254},
     ],
   },
   {

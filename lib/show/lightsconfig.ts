@@ -11,9 +11,12 @@ export enum L  {
   PR1 = 'pr1',
   PR2 = 'pr2',
   PR3 = 'pr3',
+  TVT = 'tvt',
+  TVS = 'tvs',
 }
 
 export const lightsConfig = {
+  '1': L.TVT,
   '6': L.BOOK,
   '5': L.UP,
   '8': L.DOWN,
@@ -26,4 +29,5 @@ export const lightsConfig = {
   '13': L.PR1,
   '16': L.PR2,
   '14': L.PR3,
+  '22': L.TVS,
 };
