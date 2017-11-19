@@ -89,6 +89,18 @@ export class HueApi {
     }
   }
 
+  allOff() {
+    const changeSet: LightChangeSet = [];
+    for (const alias of Object.keys(this.lights)) {
+      if (!this.lights[alias].state.on) {
+        continue;
+      }
+      const change: LightChange = {id: alias, on: false};
+      changeSet.push(change);
+    }
+    this.changeLights(changeSet);
+  }
+
   private diffChange(change: LightChange): HueRequestLightState|null {
     const light = this.lights[change.id];
     if (!light) {

@@ -12,3 +12,4 @@ export const HUE_ENABLE_DEBUG = false;
 
 // Show config.
 export const SHOW_ENABLE_DEBUG = true;
+export const SHOW_REST_ON_PITCH = 21;
