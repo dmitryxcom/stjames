@@ -138,6 +138,7 @@ export class HueApi {
       if (!item.success) {
         const reason = item.error ? item.error.description : 'unknown reason';
         console.error(`Error changing the light state: ${reason}`);
+        return;
       }
       const resource = Object.keys(item.success)[0];
       const rawValue = item.success[resource];

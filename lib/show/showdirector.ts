@@ -61,7 +61,7 @@ export class ShowDirector {
   }
 
   private addOffNote() {
-    if (!this.scoreNote.off) {
+    if (!this.scoreNote || !this.scoreNote.off) {
       return;
     }
     this.offNoteHandlers[this.scoreNote.note] = this.scoreNote.off;

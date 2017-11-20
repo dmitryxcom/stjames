@@ -44,7 +44,7 @@ export class MidiApi {
     const [cmd, pitch, velo] = e.data;
     if (cmd != MIDI_CMD_ON && cmd != MIDI_CMD_OFF) return;
     if (pitch < this.config.midiRangeStart || pitch > this.config.midiRangeEnd) return;
-    const codes = this.pitchMap[pitch];
+    const codes = this.pitchMap![pitch];
     const note: Note = {
       state: cmd == MIDI_CMD_ON ? NoteState.ON : NoteState.OFF,
       pitch: pitch,

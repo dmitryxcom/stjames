@@ -2,10 +2,9 @@
   "compilerOptions": {
     "module": "amd",
     "target": "es2016",
-    "sourceMap": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "noEmit": true,
+    "noEmitOnError": true,
     "strict": true
   },
   "exclude": [

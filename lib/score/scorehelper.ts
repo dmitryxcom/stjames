@@ -35,7 +35,10 @@ export type ShortScore = ShortScoreNote[];
 
 
 export function buildScoreFromSchortScoreMeasures(...measures: ShortScore[]): Score {
-  return [].concat(...measures.map((measure) => measure.map((note) => shortScoreNoteTocoreNote(note))));
+  return ([] as Score).concat(
+    ...measures.map((measure: ShortScore) =>
+        measure.map((shortNote: ShortScoreNote) =>
+          shortScoreNoteTocoreNote(shortNote))));
 }
 
 
@@ -45,7 +48,7 @@ function shortScoreNoteTocoreNote(shortNote: ShortScoreNote): ScoreNote {
     result.on = shortNote.on.map(shortLightChangeToLightChange);
   }
   if (shortNote.off) {
-    result.off = shortNote.on.map(shortLightChangeToLightChange);
+    result.off = shortNote.off.map(shortLightChangeToLightChange);
   }
   return result;
 }
