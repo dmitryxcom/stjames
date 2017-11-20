@@ -75,7 +75,7 @@ function authenticateUser(bridgeIp: string): Promise<string> {
       if (!response.success) {
         throw new Error(`Hue brdige auth failed for unknown reason.`);
       }
-      return responseJson[0].success.username;
+      return response.success.username;
     });
 
 }

@@ -31,7 +31,7 @@ const DEFAULT_TRANSITION_TIME = 0;
 export class HueApi {
   private lights: HueApiLights = {};
 
-  constructor(private bridgeIp: string, private username: string, private config?: HueApiConfig) {}
+  constructor(private bridgeIp: string, private username: string, private config: HueApiConfig) {}
 
   setLights(lightsConfig: LightsConfig): Promise<void> {
     this.lights = {};
@@ -115,7 +115,7 @@ export class HueApi {
         // Light is off, turning it on, must force brightness.
         const bri = diffBri != null ? diffBri : state.bri;
         const result = HueApi.createChangeRequest(bri, diffXy, change.t);
-        result.on = true;
+        result!.on = true;
         return result;
       }
       if (!change.on && !state.on) {

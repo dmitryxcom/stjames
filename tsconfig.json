@@ -3,7 +3,9 @@
     "module": "amd",
     "target": "es2016",
     "sourceMap": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    // TODO: enable that
+    //"strict": true,
   },
   "exclude": [
     "node_modules",
