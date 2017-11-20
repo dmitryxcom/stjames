@@ -12,6 +12,10 @@ interface LightState {
   on?: boolean,
 }
 
+interface Time {
+  t: number;
+}
+
 
 const C = {
   WHITE: {xy: [0.3136, 0.33], bri: 254} as Color,
@@ -27,11 +31,11 @@ const C = {
 };
 
 const T = {
-  T1: {t: 1},
-  T2: {t: 2},
-  T3: {t: 3},
-  T5: {t: 5},
-  T50: {t: 50},
+  T1: {t: 1} as Time,
+  T2: {t: 2} as Time,
+  T3: {t: 3} as Time,
+  T5: {t: 5} as Time,
+  T50: {t: 50} as Time,
 };
 
 const L = {
@@ -70,7 +74,6 @@ const L = {
 };
 
 
-
 const m1: Score = [
   {
     note: '4Eb',
@@ -91,30 +94,6 @@ const m1: Score = [
     on: [
       {...L.PL3, ...C.RED_DIM, ...T.T1},
       {...L.PR3, ...C.RED_DIM, ...T.T1},
-    ],
-  }
-];
-
-const m1n  = [
-  {
-    note: '4Eb',
-    on: [
-      [L.BOOK, C.WHITE, T.T5],
-      [L.BDR, C.WHITE, T.T5],
-    ],
-  },
-  {
-    note: '4G',
-    on: [
-      [L.TVT,  C.RED, T.T50],
-      [L.TVS, C.WHITE, T.T50],
-    ],
-  },
-  {
-    note: '4Eb',
-    on: [
-      [L.PL3, C.RED_DIM, T.T1],
-      [L.PR3, C.RED_DIM, T.T1],
     ],
   }
 ];
