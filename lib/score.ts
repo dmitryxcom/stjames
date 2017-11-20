@@ -1,5 +1,5 @@
 import {Score} from './show/score';
-import {L as LIGHT} from './show/lightsconfig';
+import {L as Light} from './show/lightsconfig';
 
 
 interface Color {
@@ -8,7 +8,7 @@ interface Color {
 }
 
 interface LightState {
-  id: LIGHT,
+  id: Light,
   on?: boolean,
 }
 
@@ -23,7 +23,6 @@ const C = {
   YELLOW_DEEP: {xy: [0.5936, 0.3818], bri: 178} as Color,
   PURPLE: {xy: [0.2535, 0.1246], bri: 254} as Color,
   PURPLE_UP: {xy: [0.2535, 0.1246], bri: 191} as Color,
-  //PURPLE_UP: {xy: [0.2758, 0.139328], bri: 191} as Color,
   BLUE: {xy: [0.15, 0.0843], bri: 254} as Color,
 };
 
@@ -36,38 +35,38 @@ const T = {
 };
 
 const L = {
-  BOOK: {id: LIGHT.BOOK, on: true} as LightState,
-  BDR: {id: LIGHT.BDR, on: true} as LightState,
-  UP: {id: LIGHT.UP, on: true} as LightState,
-  DOWN: {id: LIGHT.DOWN, on: true} as LightState,
-  SFA: {id: LIGHT.SFA, on: true} as LightState,
-  SFL: {id: LIGHT.SFL, on: true} as LightState,
-  SFR: {id: LIGHT.SFR, on: true} as LightState,
-  PL1: {id: LIGHT.PL1, on: true} as LightState,
-  PL2: {id: LIGHT.PL2, on: true} as LightState,
-  PL3: {id: LIGHT.PL3, on: true} as LightState,
-  PR1: {id: LIGHT.PR1, on: true} as LightState,
-  PR2: {id: LIGHT.PR2, on: true} as LightState,
-  PR3: {id: LIGHT.PR3, on: true} as LightState,
-  TVT: {id: LIGHT.TVT, on: true} as LightState,
-  TVS: {id: LIGHT.TVS, on: true} as LightState,
-  TBL: {id: LIGHT.TBL, on: true} as LightState,
-  BOOK_OFF: {id: LIGHT.BOOK, on: false} as LightState,
-  BDR_OFF: {id: LIGHT.BDR, on: false} as LightState,
-  UP_OFF: {id: LIGHT.UP, on: false} as LightState,
-  DOWN_OFF: {id: LIGHT.DOWN, on: false} as LightState,
-  SFA_OFF: {id: LIGHT.SFA, on: false} as LightState,
-  SFL_OFF: {id: LIGHT.SFL, on: false} as LightState,
-  SFR_OFF: {id: LIGHT.SFR, on: false} as LightState,
-  PL1_OFF: {id: LIGHT.PL1, on: false} as LightState,
-  PL2_OFF: {id: LIGHT.PL2, on: false} as LightState,
-  PL3_OFF: {id: LIGHT.PL3, on: false} as LightState,
-  PR1_OFF: {id: LIGHT.PR1, on: false} as LightState,
-  PR2_OFF: {id: LIGHT.PR2, on: false} as LightState,
-  PR3_OFF: {id: LIGHT.PR3, on: false} as LightState,
-  TVT_OFF: {id: LIGHT.TVT, on: false} as LightState,
-  TVS_OFF: {id: LIGHT.TVS, on: false} as LightState,
-  TBL_OFF: {id: LIGHT.TBL, on: false} as LightState,
+  BOOK: {id: Light.BOOK, on: true} as LightState,
+  BDR: {id: Light.BDR, on: true} as LightState,
+  UP: {id: Light.UP, on: true} as LightState,
+  DOWN: {id: Light.DOWN, on: true} as LightState,
+  SFA: {id: Light.SFA, on: true} as LightState,
+  SFL: {id: Light.SFL, on: true} as LightState,
+  SFR: {id: Light.SFR, on: true} as LightState,
+  PL1: {id: Light.PL1, on: true} as LightState,
+  PL2: {id: Light.PL2, on: true} as LightState,
+  PL3: {id: Light.PL3, on: true} as LightState,
+  PR1: {id: Light.PR1, on: true} as LightState,
+  PR2: {id: Light.PR2, on: true} as LightState,
+  PR3: {id: Light.PR3, on: true} as LightState,
+  TVT: {id: Light.TVT, on: true} as LightState,
+  TVS: {id: Light.TVS, on: true} as LightState,
+  TBL: {id: Light.TBL, on: true} as LightState,
+  BOOK_OFF: {id: Light.BOOK, on: false} as LightState,
+  BDR_OFF: {id: Light.BDR, on: false} as LightState,
+  UP_OFF: {id: Light.UP, on: false} as LightState,
+  DOWN_OFF: {id: Light.DOWN, on: false} as LightState,
+  SFA_OFF: {id: Light.SFA, on: false} as LightState,
+  SFL_OFF: {id: Light.SFL, on: false} as LightState,
+  SFR_OFF: {id: Light.SFR, on: false} as LightState,
+  PL1_OFF: {id: Light.PL1, on: false} as LightState,
+  PL2_OFF: {id: Light.PL2, on: false} as LightState,
+  PL3_OFF: {id: Light.PL3, on: false} as LightState,
+  PR1_OFF: {id: Light.PR1, on: false} as LightState,
+  PR2_OFF: {id: Light.PR2, on: false} as LightState,
+  PR3_OFF: {id: Light.PR3, on: false} as LightState,
+  TVT_OFF: {id: Light.TVT, on: false} as LightState,
+  TVS_OFF: {id: Light.TVS, on: false} as LightState,
+  TBL_OFF: {id: Light.TBL, on: false} as LightState,
 };
 
 
@@ -92,6 +91,30 @@ const m1: Score = [
     on: [
       {...L.PL3, ...C.RED_DIM, ...T.T1},
       {...L.PR3, ...C.RED_DIM, ...T.T1},
+    ],
+  }
+];
+
+const m1n  = [
+  {
+    note: '4Eb',
+    on: [
+      [L.BOOK, C.WHITE, T.T5],
+      [L.BDR, C.WHITE, T.T5],
+    ],
+  },
+  {
+    note: '4G',
+    on: [
+      [L.TVT,  C.RED, T.T50],
+      [L.TVS, C.WHITE, T.T50],
+    ],
+  },
+  {
+    note: '4Eb',
+    on: [
+      [L.PL3, C.RED_DIM, T.T1],
+      [L.PR3, C.RED_DIM, T.T1],
     ],
   }
 ];
@@ -142,9 +165,9 @@ const m3: Score = [
   {
     note: '4F',
     on: [
-      {...L.SFA_OFF, ...T.T1},
-      {...L.SFR_OFF, ...T.T1},
-      {...L.SFL_OFF, ...T.T1},
+      {...L.SFA_OFF, ...T.T5},
+      {...L.SFR_OFF, ...T.T5},
+      {...L.SFL_OFF, ...T.T5},
     ],
   },
 ];
@@ -153,12 +176,12 @@ const m4: Score = [
   {
     note: '4G',
     on: [
-      {...L.PL1_OFF, ...T.T1},
-      {...L.PR1_OFF, ...T.T1},
-      {...L.PL2_OFF, ...T.T1},
-      {...L.PR2_OFF, ...T.T1},
-      {...L.PL3_OFF, ...T.T1},
-      {...L.PR3_OFF, ...T.T1},
+      {...L.PL1_OFF, ...T.T3},
+      {...L.PR1_OFF, ...T.T3},
+      {...L.PL2_OFF, ...T.T3},
+      {...L.PR2_OFF, ...T.T3},
+      {...L.PL3_OFF, ...T.T3},
+      {...L.PR3_OFF, ...T.T3},
     ],
   },
   {
