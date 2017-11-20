@@ -1,4 +1,4 @@
-export enum L  {
+export enum Light  {
   BOOK = 'book',
   BDR = 'bdr',
   UP = 'ltop',
@@ -18,20 +18,20 @@ export enum L  {
 }
 
 export const lightsConfig = {
-  '1': L.TVT,
-  '6': L.BOOK,
-  '7': L.BDR,
-  '5': L.UP,
-  '8': L.DOWN,
-  '9': L.SFA,
-  '19': L.SFL,
-  '20': L.SFR,
-  '17': L.PL1,
-  '15': L.PL2,
-  '18': L.PL3,
-  '13': L.PR1,
-  '16': L.PR2,
-  '14': L.PR3,
-  '22': L.TVS,
-  '26': L.TBL,
+  '1': Light.TVT,
+  '6': Light.BOOK,
+  '7': Light.BDR,
+  '5': Light.UP,
+  '8': Light.DOWN,
+  '9': Light.SFA,
+  '19': Light.SFL,
+  '20': Light.SFR,
+  '17': Light.PL1,
+  '15': Light.PL2,
+  '18': Light.PL3,
+  '13': Light.PR1,
+  '16': Light.PR2,
+  '14': Light.PR3,
+  '22': Light.TVS,
+  '26': Light.TBL,
 };
