@@ -28,7 +28,6 @@ const C = {
   PURPLE: {xy: [0.2535, 0.1246], bri: 254} as Color,
   PURPLE_UP: {xy: [0.2535, 0.1246], bri: 191} as Color,
   BLUE: {xy: [0.15, 0.0843], bri: 254} as Color,
-  BLUE_DEEP: {xy: [0.154, 0.0806], bri: 254} as Color,
   GREEN_LIGHT: {xy: [0.1977, 0.5716], bri: 254} as Color,
   GREEN_MID: {xy: [0.2115, 0.6067], bri: 165} as Color,
 };
@@ -318,6 +317,159 @@ const m8: Score = [
       {...L.PL2_OFF, ...T.T3},
     ],
   },
+  {
+    note: '4F#',
+    on: [
+      {...L.PR3, ...C.RED, ...T.T1},
+      {...L.PL3, ...C.BLUE, ...T.T1},
+      {...L.PR1, ...C.BLUE, ...T.T1},
+      {...L.PL1, ...C.RED, ...T.T1},
+    ],
+  },
 ];
 
-export const score: Score = [...m1, ...m2,  ...m3, ...m4, ...m5, ...m6, ...m7, ...m8];
+const m9: Score = [
+  {
+    note: '4G',
+    on: [
+      {...L.PR2, ...C.GREEN_LIGHT, ...T.T1},
+      {...L.PL2, ...C.GREEN_LIGHT, ...T.T1},
+    ],
+  },
+  {
+    note: '4G',
+    on: [
+      {...L.PR3, ...C.BLUE, ...T.T1},
+      {...L.PR1, ...C.RED, ...T.T1},
+    ],
+  },
+  {
+    note: '4G',
+    on: [
+      {...L.PL3, ...C.RED, ...T.T1},
+      {...L.PL1, ...C.BLUE, ...T.T1},
+    ],
+  },
+  {
+    note: '4F',
+    on: [
+      {...L.BOOK, ...C.GREEN_LIGHT, ...T.T1},
+      {...L.BDR, ...C.GREEN_LIGHT, ...T.T1},
+    ],
+  },
+];
+
+
+const m10: Score = [
+  {
+    note: '4Eb',
+    on: [
+      {...L.PR3, ...C.GREEN_LIGHT},
+      {...L.PR2, ...C.RED},
+      {...L.PR1_OFF},
+      {...L.PL3, ...C.GREEN_LIGHT},
+      {...L.PL2, ...C.BLUE},
+      {...L.PL1_OFF},
+    ],
+  },
+  {
+    note: '4C',
+    on: [
+      {...L.PR3, ...C.RED},
+      {...L.PR2_OFF},
+      {...L.PL3, ...C.BLUE},
+      {...L.PL2_OFF},
+    ],
+  },
+  {
+    note: '2Bb',
+    on: [
+      {...L.PR2, ...C.BLUE, ...T.T3},
+      {...L.PL2, ...C.RED, ...T.T3},
+    ],
+  },
+  {
+    note: '2A',
+    on: [
+      {...L.PR1, ...C.GREEN_LIGHT, ...T.T3},
+      {...L.PL1, ...C.GREEN_LIGHT, ...T.T3},
+    ],
+  },
+  {
+    note: '4C',
+    on: [
+      {...L.TVT, ...C.GREEN_MID, ...T.T1},
+    ],
+  },
+  {
+    note: '4D',
+    on: [
+      {...L.DOWN, ...C.BLUE, ...T.T1},
+    ],
+  },
+];
+
+const m11: Score = [
+  {
+    note: '4Eb',
+    on: [
+      {...L.UP, ...C.RED, ...T.T3},
+      {...L.BOOK, ...C.RED, ...T.T3},
+      {...L.BDR, ...C.RED, ...T.T3},
+    ],
+  },
+  {
+    note: '4Eb',
+    on: [
+      {...L.PL3, ...C.RED, ...T.T3},
+      {...L.PR2, ...C.RED, ...T.T3},
+    ],
+  },
+  {
+    note: '4Eb',
+    on: [
+      {...L.SFA, ...C.RED, ...T.T3},
+      {...L.TVS, ...C.RED, ...T.T3},
+    ],
+  },
+  {
+    note: '4D',
+    on: [
+      {...L.TVT, ...C.RED, ...T.T3},
+    ],
+  },
+];
+
+const m12: Score = [
+  {
+    note: '4C',
+    on: [
+      {...L.DOWN, ...C.RED},
+      {...L.PL1, ...C.RED},
+      {...L.PR1, ...C.RED},
+    ],
+  },
+  {
+    note: '3F#',
+    on: [
+      {...L.UP_OFF, ...T.T3},
+      {...L.DOWN_OFF, ...T.T3},
+      {...L.SFA_OFF, ...T.T3},
+      {...L.TVT_OFF, ...T.T3},
+      {...L.TVS_OFF, ...T.T3},
+    ],
+  },
+  {
+    note: '3G',
+    on: [
+      {...L.PR3_OFF, ...T.T3},
+      {...L.PL3_OFF, ...T.T3},
+      {...L.PR2_OFF, ...T.T3},
+      {...L.PL2_OFF, ...T.T3},
+      {...L.PR1_OFF, ...T.T3},
+      {...L.PL1_OFF, ...T.T3},
+    ],
+  },
+];
+
+export const score: Score = [...m1, ...m2,  ...m3, ...m4, ...m5, ...m6, ...m7, ...m8, ...m9, ...m10, ...m11, ...m12];
