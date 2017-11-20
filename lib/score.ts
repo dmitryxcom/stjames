@@ -1,22 +1,6 @@
-import {Score, ScoreNote} from './show/score';
+import {Score} from './show/score';
 import {L as Light} from './show/lightsconfig';
-import {PitchCode} from './midi/types';
-import {LightChange, LightChangeSet} from './hue/hueapi';
-
-
-interface Color {
-  xy: [number, number],
-  bri: number,
-}
-
-interface LightState {
-  id: Light,
-  on?: boolean,
-}
-
-interface Time {
-  t: number;
-}
+import {buildScoreFromSchortScoreMeasures, Color, LightState, ShortScore, Time,} from './scorehelper';
 
 
 const C = {
@@ -77,41 +61,9 @@ const L = {
   TBL_OFF: {id: Light.TBL, on: false} as LightState,
 };
 
-interface ShortScoreNote {
-  note: PitchCode,
-  on?: ShortLightChange[],
-  off?: ShortLightChange[],
-}
-
-type ShortLightChange = [LightState] | [LightState, Time] | [LightState, Color] | [LightState, Color, Time];
-
-type ShortScore = ShortScoreNote[];
-
-function buildScoreFromSchortScoreMeasures(...measures: ShortScore[]): Score {
-  return [].concat(...measures.map((measure) => measure.map((note) => shortScoreNoteTocoreNote(note))));
-}
-
-function shortScoreNoteTocoreNote(shortNote: ShortScoreNote): ScoreNote {
-  const result: ScoreNote = {note: shortNote.note};
-  if (shortNote.on) {
-    result.on = shortNote.on.map(shortLightChangeToLightChange);
-  }
-  if (shortNote.off) {
-    result.off = shortNote.on.map(shortLightChangeToLightChange);
-  }
-  return result;
-}
-
-function shortLightChangeToLightChange(shortChange: ShortLightChange): LightChange {
-  return {
-    ...shortChange[0],
-    ...(shortChange.length > 1 ? shortChange[1] : null),
-    ...(shortChange.length > 2 ? shortChange[2] : null)
-  };
-}
 
 
-const m1s: ShortScore = [
+const m1: ShortScore = [
   {
     note: '4Eb',
     on: [
@@ -126,402 +78,384 @@ const m1s: ShortScore = [
       [L.TVS, C.WHITE, T.T50],
     ],
   },
-];
-
-
-const m1: Score = [
   {
     note: '4Eb',
     on: [
-      {...L.BOOK, ...C.WHITE, ...T.T5},
-      {...L.BDR, ...C.WHITE, ...T.T5},
-    ],
-  },
-  {
-    note: '4G',
-    on: [
-      {...L.TVT, ...C.RED, ...T.T50},
-      {...L.TVS, ...C.WHITE, ...T.T50},
-    ],
-  },
-  {
-    note: '4Eb',
-    on: [
-      {...L.PL3, ...C.RED_DIM, ...T.T1},
-      {...L.PR3, ...C.RED_DIM, ...T.T1},
+      [L.PL3, C.RED_DIM, T.T1],
+      [L.PR3, C.RED_DIM, T.T1],
     ],
   }
 ];
 
-const m2: Score = [
+const m2: ShortScore = [
   {
     note: '4D',
     on: [
-      {...L.PL3_OFF},
-      {...L.PR3_OFF},
-      {...L.PR2, ...C.WHITE_MID, ...T.T1},
-      {...L.PL2, ...C.WHITE_MID, ...T.T1},
+      [L.PL3_OFF],
+      [L.PR3_OFF],
+      [L.PR2, C.WHITE_MID, T.T1],
+      [L.PL2, C.WHITE_MID, T.T1],
     ],
   },
   {
     note: '4G',
     on: [
-      {...L.PL3, ...T.T3},
-      {...L.PR3, ...T.T3},
-      {...L.PR1, ...C.YELLOW_DEEP, ...T.T3},
-      {...L.PL1, ...C.YELLOW_DEEP, ...T.T3},
-      {...L.PR2, ...C.RED_MID, ...T.T3},
-      {...L.PL2, ...C.RED_MID, ...T.T3},
+      [L.PL3, T.T3],
+      [L.PR3, T.T3],
+      [L.PR1, C.YELLOW_DEEP, T.T3],
+      [L.PL1, C.YELLOW_DEEP, T.T3],
+      [L.PR2, C.RED_MID, T.T3],
+      [L.PL2, C.RED_MID, T.T3],
     ],
   },
   {
     note: '4D',
     on: [
-      {...L.SFL, ...C.BLUE, ...T.T2},
+      [L.SFL, C.BLUE, T.T2],
     ],
   },
 ];
 
-const m3: Score = [
+const m3: ShortScore = [
   {
     note: '4C',
     on: [
-      {...L.SFR, ...C.BLUE, ...T.T2},
+      [L.SFR, C.BLUE, T.T2],
     ],
   },
   {
     note: '4Eb',
     on: [
-      {...L.SFA, ...C.RED, ...T.T1},
+      [L.SFA, C.RED, T.T1],
     ],
   },
   {
     note: '4F',
     on: [
-      {...L.SFA_OFF, ...T.T5},
-      {...L.SFR_OFF, ...T.T5},
-      {...L.SFL_OFF, ...T.T5},
+      [L.SFA_OFF, T.T5],
+      [L.SFR_OFF, T.T5],
+      [L.SFL_OFF, T.T5],
     ],
   },
 ];
 
-const m4: Score = [
+const m4: ShortScore = [
   {
     note: '4G',
     on: [
-      {...L.PL1_OFF, ...T.T3},
-      {...L.PR1_OFF, ...T.T3},
-      {...L.PL2_OFF, ...T.T3},
-      {...L.PR2_OFF, ...T.T3},
-      {...L.PL3_OFF, ...T.T3},
-      {...L.PR3_OFF, ...T.T3},
+      [L.PL1_OFF, T.T3],
+      [L.PR1_OFF, T.T3],
+      [L.PL2_OFF, T.T3],
+      [L.PR2_OFF, T.T3],
+      [L.PL3_OFF, T.T3],
+      [L.PR3_OFF, T.T3],
     ],
   },
   {
     note: '4C',
     on: [
-      {...L.PR2, ...C.BLUE, ...T.T3},
-      {...L.PL2, ...C.BLUE, ...T.T3},
+      [L.PR2, C.BLUE, T.T3],
+      [L.PL2, C.BLUE, T.T3],
     ],
   },
   {
     note: '4Eb',
     on: [
-      {...L.DOWN, ...C.PURPLE_UP, ...T.T3},
+      [L.DOWN, C.PURPLE_UP, T.T3],
     ],
   },
 ];
 
-const m5: Score = [
+const m5: ShortScore = [
   {
     note: '4G',
     on: [
-       {...L.UP, ...C.PINK, ...T.T5},
+       [L.UP, C.PINK, T.T5],
     ]
   },
   {
     note: '4G',
     on: [
-      {...L.PR3, ...C.RED, ...T.T3},
-      {...L.PL3, ...C.RED, ...T.T3},
+      [L.PR3, C.RED, T.T3],
+      [L.PL3, C.RED, T.T3],
     ]
   },
   {
     note: '3B',
     on: [
-      {...L.SFA, ...C.PURPLE},
-      {...L.PR1, ...C.PURPLE, ...T.T3},
-      {...L.PL1, ...C.PURPLE, ...T.T3},
+      [L.SFA, C.PURPLE],
+      [L.PR1, C.PURPLE, T.T3],
+      [L.PL1, C.PURPLE, T.T3],
     ],
   },
   {
     note: '4G',
     on: [
-      {...L.TVS, ...C.PURPLE},
-      {...L.PR3, ...C.PURPLE, ...T.T3},
-      {...L.PL3, ...C.PURPLE, ...T.T3},
+      [L.TVS, C.PURPLE],
+      [L.PR3, C.PURPLE, T.T3],
+      [L.PL3, C.PURPLE, T.T3],
     ],
   },
 ];
 
-const m6: Score = [
+const m6: ShortScore = [
   {
     note: '4Eb',
     on: [
-      {...L.SFL, ...C.BLUE},
+      [L.SFL, C.BLUE],
     ],
   },
   {
     note: '4C',
     on: [
-      {...L.SFR, ...C.BLUE},
+      [L.SFR, C.BLUE],
     ],
   },
   {
     note: '3D',
     on: [
-      {...L.BDR, ...C.BLUE, ...T.T3},
+      [L.BDR, C.BLUE, T.T3],
     ],
   },
   {
     note: '3Eb',
     on: [
-      {...L.BOOK, ...C.RED, ...T.T3},
+      [L.BOOK, C.RED, T.T3],
     ],
   },
   {
     note: '4C',
     on: [
-      {...L.PR1, ...C.RED, ...T.T3},
-      {...L.PL1, ...C.RED, ...T.T3},
+      [L.PR1, C.RED, T.T3],
+      [L.PL1, C.RED, T.T3],
     ],
   },
   {
     note: '4Eb',
     on: [
-      {...L.DOWN, ...C.BLUE, ...T.T3},
-      {...L.TVS, ...C.RED, ...T.T3},
+      [L.DOWN, C.BLUE, T.T3],
+      [L.TVS, C.RED, T.T3],
     ],
   },
 ];
 
-const m7: Score = [
+const m7: ShortScore = [
   {
     note: '4G',
     on: [
-      {...L.UP, ...C.RED, ...T.T3},
-      {...L.PR3, ...C.RED, ...T.T1},
-      {...L.PL3, ...C.RED, ...T.T1},
+      [L.UP, C.RED, T.T3],
+      [L.PR3, C.RED, T.T1],
+      [L.PL3, C.RED, T.T1],
     ],
   },
   {
     note: '4G',
     on: [
-      {...L.TVT, ...C.BLUE, ...T.T3},
+      [L.TVT, C.BLUE, T.T3],
     ],
   },
   {
     note: '5C',
     on: [
-      {...L.SFA, ...C.RED, ...T.T3},
-      {...L.PR2, ...C.RED, ...T.T3},
-      {...L.PL2, ...C.RED, ...T.T3},
+      [L.SFA, C.RED, T.T3],
+      [L.PR2, C.RED, T.T3],
+      [L.PL2, C.RED, T.T3],
     ],
   },
   {
     note: '3Ab',
     on: [
-      {...L.PR1_OFF, ...T.T3},
-      {...L.PL1_OFF, ...T.T3},
+      [L.PR1_OFF, T.T3],
+      [L.PL1_OFF, T.T3],
     ],
   },
 ];
 
-const m8: Score = [
+const m8: ShortScore = [
   {
     note: '3G',
     on: [
-      {...L.TVS_OFF, ...T.T3},
-      {...L.SFA_OFF, ...T.T3},
+      [L.TVS_OFF, T.T3],
+      [L.SFA_OFF, T.T3],
     ],
   },
   {
     note: '3F',
     on: [
-      {...L.UP_OFF},
-      {...L.SFL_OFF},
+      [L.UP_OFF],
+      [L.SFL_OFF],
     ],
   },
   {
     note: '3C#',
     on: [
-      {...L.DOWN_OFF},
-      {...L.SFR_OFF},
+      [L.DOWN_OFF],
+      [L.SFR_OFF],
     ],
   },
   {
     note: '3D',
     on: [
-      {...L.TVT_OFF, ...T.T5},
-      {...L.PR3_OFF, ...T.T3},
-      {...L.PL3_OFF, ...T.T3},
-      {...L.PR2_OFF, ...T.T3},
-      {...L.PL2_OFF, ...T.T3},
+      [L.TVT_OFF, T.T5],
+      [L.PR3_OFF, T.T3],
+      [L.PL3_OFF, T.T3],
+      [L.PR2_OFF, T.T3],
+      [L.PL2_OFF, T.T3],
     ],
   },
   {
     note: '4F#',
     on: [
-      {...L.PR3, ...C.RED, ...T.T1},
-      {...L.PL3, ...C.BLUE, ...T.T1},
-      {...L.PR1, ...C.BLUE, ...T.T1},
-      {...L.PL1, ...C.RED, ...T.T1},
+      [L.PR3, C.RED, T.T1],
+      [L.PL3, C.BLUE, T.T1],
+      [L.PR1, C.BLUE, T.T1],
+      [L.PL1, C.RED, T.T1],
     ],
   },
 ];
 
-const m9: Score = [
+const m9: ShortScore = [
   {
     note: '4G',
     on: [
-      {...L.PR2, ...C.GREEN_LIGHT, ...T.T1},
-      {...L.PL2, ...C.GREEN_LIGHT, ...T.T1},
+      [L.PR2, C.GREEN_LIGHT, T.T1],
+      [L.PL2, C.GREEN_LIGHT, T.T1],
     ],
   },
   {
     note: '4G',
     on: [
-      {...L.PR3, ...C.BLUE, ...T.T1},
-      {...L.PR1, ...C.RED, ...T.T1},
+      [L.PR3, C.BLUE, T.T1],
+      [L.PR1, C.RED, T.T1],
     ],
   },
   {
     note: '4G',
     on: [
-      {...L.PL3, ...C.RED, ...T.T1},
-      {...L.PL1, ...C.BLUE, ...T.T1},
+      [L.PL3, C.RED, T.T1],
+      [L.PL1, C.BLUE, T.T1],
     ],
   },
   {
     note: '4F',
     on: [
-      {...L.BOOK, ...C.GREEN_LIGHT, ...T.T1},
-      {...L.BDR, ...C.GREEN_LIGHT, ...T.T1},
+      [L.BOOK, C.GREEN_LIGHT, T.T1],
+      [L.BDR, C.GREEN_LIGHT, T.T1],
     ],
   },
 ];
 
 
-const m10: Score = [
+const m10: ShortScore = [
   {
     note: '4Eb',
     on: [
-      {...L.PR3, ...C.GREEN_LIGHT},
-      {...L.PR2, ...C.RED},
-      {...L.PR1_OFF},
-      {...L.PL3, ...C.GREEN_LIGHT},
-      {...L.PL2, ...C.BLUE},
-      {...L.PL1_OFF},
+      [L.PR3, C.GREEN_LIGHT],
+      [L.PR2, C.RED],
+      [L.PR1_OFF],
+      [L.PL3, C.GREEN_LIGHT],
+      [L.PL2, C.BLUE],
+      [L.PL1_OFF],
     ],
   },
   {
     note: '4C',
     on: [
-      {...L.PR3, ...C.RED},
-      {...L.PR2_OFF},
-      {...L.PL3, ...C.BLUE},
-      {...L.PL2_OFF},
+      [L.PR3, C.RED],
+      [L.PR2_OFF],
+      [L.PL3, C.BLUE],
+      [L.PL2_OFF],
     ],
   },
   {
     note: '2Bb',
     on: [
-      {...L.PR2, ...C.BLUE, ...T.T3},
-      {...L.PL2, ...C.RED, ...T.T3},
+      [L.PR2, C.BLUE, T.T3],
+      [L.PL2, C.RED, T.T3],
     ],
   },
   {
     note: '2A',
     on: [
-      {...L.PR1, ...C.GREEN_LIGHT, ...T.T3},
-      {...L.PL1, ...C.GREEN_LIGHT, ...T.T3},
+      [L.PR1, C.GREEN_LIGHT, T.T3],
+      [L.PL1, C.GREEN_LIGHT, T.T3],
     ],
   },
   {
     note: '4C',
     on: [
-      {...L.TVT, ...C.GREEN_MID, ...T.T1},
+      [L.TVT, C.GREEN_MID, T.T1],
     ],
   },
   {
     note: '4D',
     on: [
-      {...L.DOWN, ...C.BLUE, ...T.T1},
+      [L.DOWN, C.BLUE, T.T1],
     ],
   },
 ];
 
-const m11: Score = [
+const m11: ShortScore = [
   {
     note: '4Eb',
     on: [
-      {...L.UP, ...C.RED, ...T.T3},
-      {...L.BOOK, ...C.RED, ...T.T3},
-      {...L.BDR, ...C.RED, ...T.T3},
+      [L.UP, C.RED, T.T3],
+      [L.BOOK, C.RED, T.T3],
+      [L.BDR, C.RED, T.T3],
     ],
   },
   {
     note: '4Eb',
     on: [
-      {...L.PL3, ...C.RED, ...T.T3},
-      {...L.PR2, ...C.RED, ...T.T3},
+      [L.PL3, C.RED, T.T3],
+      [L.PR2, C.RED, T.T3],
     ],
   },
   {
     note: '4Eb',
     on: [
-      {...L.SFA, ...C.RED, ...T.T3},
-      {...L.TVS, ...C.RED, ...T.T3},
+      [L.SFA, C.RED, T.T3],
+      [L.TVS, C.RED, T.T3],
     ],
   },
   {
     note: '4D',
     on: [
-      {...L.TVT, ...C.RED, ...T.T3},
+      [L.TVT, C.RED, T.T3],
     ],
   },
 ];
 
-const m12: Score = [
+const m12: ShortScore = [
   {
     note: '4C',
     on: [
-      {...L.DOWN, ...C.RED},
-      {...L.PL1, ...C.RED},
-      {...L.PR1, ...C.RED},
+      [L.DOWN, C.RED],
+      [L.PL1, C.RED],
+      [L.PR1, C.RED],
     ],
   },
   {
     note: '3F#',
     on: [
-      {...L.UP_OFF, ...T.T3},
-      {...L.DOWN_OFF, ...T.T3},
-      {...L.SFA_OFF, ...T.T3},
-      {...L.TVT_OFF, ...T.T3},
-      {...L.TVS_OFF, ...T.T3},
+      [L.UP_OFF, T.T3],
+      [L.DOWN_OFF, T.T3],
+      [L.SFA_OFF, T.T3],
+      [L.TVT_OFF, T.T3],
+      [L.TVS_OFF, T.T3],
     ],
   },
   {
     note: '3G',
     on: [
-      {...L.PR3_OFF, ...T.T3},
-      {...L.PL3_OFF, ...T.T3},
-      {...L.PR2_OFF, ...T.T3},
-      {...L.PL2_OFF, ...T.T3},
-      {...L.PR1_OFF, ...T.T3},
-      {...L.PL1_OFF, ...T.T3},
+      [L.PR3_OFF, T.T3],
+      [L.PL3_OFF, T.T3],
+      [L.PR2_OFF, T.T3],
+      [L.PL2_OFF, T.T3],
+      [L.PR1_OFF, T.T3],
+      [L.PL1_OFF, T.T3],
     ],
   },
 ];
 
-export const score: Score = [...m1, ...m2,  ...m3, ...m4, ...m5, ...m6, ...m7, ...m8, ...m9, ...m10, ...m11, ...m12];
+export const score: Score = buildScoreFromSchortScoreMeasures(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12);
