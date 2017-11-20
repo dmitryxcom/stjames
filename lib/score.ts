@@ -28,6 +28,9 @@ const C = {
   PURPLE: {xy: [0.2535, 0.1246], bri: 254} as Color,
   PURPLE_UP: {xy: [0.2535, 0.1246], bri: 191} as Color,
   BLUE: {xy: [0.15, 0.0843], bri: 254} as Color,
+  BLUE_DEEP: {xy: [0.154, 0.0806], bri: 254} as Color,
+  GREEN_LIGHT: {xy: [0.1977, 0.5716], bri: 254} as Color,
+  GREEN_MID: {xy: [0.2115, 0.6067], bri: 165} as Color,
 };
 
 const T = {
