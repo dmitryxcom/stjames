@@ -3,9 +3,10 @@
     "module": "amd",
     "target": "es2016",
     "sourceMap": true,
-    "noImplicitAny": true,
-    // TODO: enable that
-    //"strict": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "noEmit": true,
+    "strict": true
   },
   "exclude": [
     "node_modules",
