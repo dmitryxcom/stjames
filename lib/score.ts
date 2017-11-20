@@ -1,5 +1,7 @@
-import {Score} from './show/score';
+import {Score, ScoreNote} from './show/score';
 import {L as Light} from './show/lightsconfig';
+import {PitchCode} from './midi/types';
+import {LightChange, LightChangeSet} from './hue/hueapi';
 
 
 interface Color {
@@ -75,6 +77,57 @@ const L = {
   TBL_OFF: {id: Light.TBL, on: false} as LightState,
 };
 
+interface ShortScoreNote {
+  note: PitchCode,
+  on?: ShortLightChange[],
+  off?: ShortLightChange[],
+}
+
+type ShortLightChange = [LightState] | [LightState, Time] | [LightState, Color] | [LightState, Color, Time];
+
+type ShortScore = ShortScoreNote[];
+
+function buildScoreFromSchortScoreMeasures(...measures: ShortScore[]): Score {
+  return [].concat(...measures.map((measure) => measure.map((note) => shortScoreNoteTocoreNote(note))));
+}
+
+function shortScoreNoteTocoreNote(shortNote: ShortScoreNote): ScoreNote {
+  const result: ScoreNote = {note: shortNote.note};
+  if (shortNote.on) {
+    result.on = shortNote.on.map(shortLightChangeToLightChange);
+  }
+  if (shortNote.off) {
+    result.off = shortNote.on.map(shortLightChangeToLightChange);
+  }
+  return result;
+}
+
+function shortLightChangeToLightChange(shortChange: ShortLightChange): LightChange {
+  return {
+    ...shortChange[0],
+    ...(shortChange.length > 1 ? shortChange[1] : null),
+    ...(shortChange.length > 2 ? shortChange[2] : null)
+  };
+}
+
+
+const m1s: ShortScore = [
+  {
+    note: '4Eb',
+    on: [
+      [L.BOOK, C.WHITE, T.T5],
+      [L.BDR, C.WHITE, T.T5],
+    ],
+  },
+  {
+    note: '4G',
+    on: [
+      [L.TVT, C.RED, T.T50],
+      [L.TVS, C.WHITE, T.T50],
+    ],
+  },
+];
+
 
 const m1: Score = [
   {
@@ -99,7 +152,6 @@ const m1: Score = [
     ],
   }
 ];
-
 
 const m2: Score = [
   {
