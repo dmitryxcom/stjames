@@ -2,7 +2,7 @@
 import {initMidi} from './midi/midi';
 import {initHue} from './hue/hue';
 import {ShowDirector} from './show/showdirector';
-import {score} from './score';
+import {score} from './score/score';
 
 // DEBUG INFO:
 // http://192.168.1.39/debug/clip.html

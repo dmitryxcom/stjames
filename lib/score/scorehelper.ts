@@ -1,7 +1,7 @@
-import {L as Light} from './show/lightsconfig';
-import {PitchCode} from './midi/types';
-import {LightChange} from './hue/hueapi';
-import {Score, ScoreNote} from './show/score';
+import {Light} from '../show/lightsconfig';
+import {PitchCode} from '../midi/types';
+import {LightChange} from '../hue/hueapi';
+import {Score, ScoreNote} from '../show/score';
 
 
 export interface Color {

@@ -1,5 +1,5 @@
 import {Color, LightState, Time,} from './scorehelper';
-import {Light} from './show/lightsconfig';
+import {Light} from '../show/lightsconfig';
 
 export const Colors = {
   WHITE: {xy: [0.3136, 0.33], bri: 254} as Color,

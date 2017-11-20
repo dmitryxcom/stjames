@@ -1,4 +1,4 @@
-import {Score} from './show/score';
+import {Score} from '../show/score';
 import {buildScoreFromSchortScoreMeasures, ShortScore} from './scorehelper';
 import {Colors as C, Lights as L, Times as T} from './scoreconfig';
 
