@@ -60,6 +60,7 @@ export class HueApi {
           index: lightIndex,
           alias: lightAlias,
           state: lightState,
+          changePromise: Promise.resolve(),
         };
       }
       if (this.config.enableDebug) {
@@ -69,23 +70,9 @@ export class HueApi {
   }
 
   changeLights(changeSet: LightChangeSet) {
-    // TODO: add one global promise to queue changesets.
     for (const changeRequest of changeSet) {
-      const change = this.diffChange(changeRequest);
-      if (!change) continue;
-      const lightIndex = this.lights[changeRequest.id].index;
-      const url = this.getSetLightStateUrl(lightIndex);
-      const bodyJson = JSON.stringify(change);
-      const options: RequestInit = {
-        method: 'PUT',
-        body: bodyJson,
-      };
-      fetchJson<HueResponseLightStateChange>(url, options).then((responseJson) => {
-        this.onStateChangeResponse(responseJson, changeRequest.id);
-        if (this.config.enableDebug) {
-          console.debug(`Light ${changeRequest.id} updated`, changeRequest, this.lights[changeRequest.id].state);
-        }
-      });
+      const light = this.lights[changeRequest.id];
+      light.changePromise = light.changePromise.then(() => this.changeLight(changeRequest));
     }
   }
 
@@ -131,6 +118,26 @@ export class HueApi {
     }
     // Light is on, only change state, if different.
     return HueApi.createChangeRequest(diffBri, diffXy, change.t);
+  }
+
+  private changeLight(changeRequest: LightChange): Promise<void> {
+    const change = this.diffChange(changeRequest);
+    if (!change) {
+      return Promise.resolve();
+    }
+    const lightIndex = this.lights[changeRequest.id].index;
+    const url = this.getSetLightStateUrl(lightIndex);
+    const bodyJson = JSON.stringify(change);
+    const options: RequestInit = {
+      method: 'PUT',
+      body: bodyJson,
+    };
+    return fetchJson<HueResponseLightStateChange>(url, options).then((responseJson) => {
+      this.onStateChangeResponse(responseJson, changeRequest.id);
+      if (this.config.enableDebug) {
+        console.debug(`Light ${changeRequest.id} updated`, changeRequest, this.lights[changeRequest.id].state);
+      }
+    });
   }
 
   private onStateChangeResponse(responseJson: HueResponseLightStateChange, alias: string) {
@@ -188,6 +195,7 @@ interface HueApiLight {
   index: string;
   alias: string;
   state: HueApiLightState;
+  changePromise: Promise<void>;
 }
 
 interface HueApiLightState {
