@@ -4,7 +4,7 @@ import {HueApi, LightChangeSet} from '../hue/hueapi';
 import {lightsConfig} from './lightsconfig';
 import {Note, NoteState, PitchCode} from '../midi/types';
 import {Score, ScoreNote} from './score';
-import {SHOW_ENABLE_DEBUG, SHOW_REST_ON_PITCH} from '../config';
+import {SHOW_ENABLE_DEBUG, SHOW_RESET_ON_PITCH} from '../config';
 
 export class ShowDirector {
   private scoreIterator: Iterator<ScoreNote>|undefined;
@@ -33,7 +33,7 @@ export class ShowDirector {
   }
 
   private onMidiNote(note: Note) {
-    if (note.state == NoteState.ON && note.pitch == SHOW_REST_ON_PITCH) {
+    if (note.state == NoteState.ON && note.pitch == SHOW_RESET_ON_PITCH) {
       this.reset();
       return;
     }
@@ -49,15 +49,14 @@ export class ShowDirector {
       // Not interesting.
       return;
     }
-    if (this.scoreNote.on) {
-      if (SHOW_ENABLE_DEBUG) {
-        console.debug('Show note playing on', this.scoreNote);
-      }
-      this.addOffNote();
-      this.hue.changeLights(this.scoreNote.on);
-      this.nextScoreNote();
-      return;
+    if (SHOW_ENABLE_DEBUG) {
+      console.debug('Show note playing on', this.scoreNote);
     }
+    this.addOffNote();
+    if (this.scoreNote.on) {
+      this.hue.changeLights(this.scoreNote.on);
+    }
+    this.nextScoreNote();
   }
 
   private addOffNote() {
