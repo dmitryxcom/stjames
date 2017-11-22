@@ -8,7 +8,7 @@ const m1: ShortScore = [
     note: '4Eb',
     on: [
       [L.BOOK, C.WHITE, T.T5],
-      [L.BDR, C.WHITE, T.T5],
+      [ L.BDR, C.WHITE, T.T5],
     ],
   },
   {
@@ -388,14 +388,137 @@ const m12: ShortScore = [
   {
     note: '3G',
     on: [
-      [L.PR3_OFF, T.T3],
-      [L.PL3_OFF, T.T3],
-      [L.PR2_OFF, T.T3],
-      [L.PL2_OFF, T.T3],
-      [L.PR1_OFF, T.T3],
-      [L.PL1_OFF, T.T3],
+      [L.PR3_OFF, T.T1],
+      [L.PL3_OFF, T.T1],
+      [L.PR2_OFF, T.T1],
+      [L.PL2_OFF, T.T1],
+      [L.PR1_OFF, T.T1],
+      [L.PL1_OFF, T.T1],
+    ],
+  },
+  {
+    note: '4F',
+    on: [
+      [L.PR1, C.BLUE, T.T1],
+      [L.PL1, C.BLUE, T.T1],
+    ],
+  },
+  {
+    note: '4F#',
+    on: [
+      [L.PR2, C.BLUE, T.T1],
+      [L.PL2, C.BLUE, T.T1],
+      [L.PR1, C.GREEN_LIGHT, T.T1],
+      [L.PL1, C.GREEN_LIGHT, T.T1],
     ],
   },
 ];
 
-export const score: Score = buildScoreFromSchortScoreMeasures(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12);
+const m12_partial: ShortScore = [
+  {
+    note: '4C',
+    on: [
+      [L.BDR, C.RED],
+      [L.BOOK, C.RED],
+    ],
+  },
+  {note: '3F#'},
+  {note: '3G'},
+  {
+    note: '4F',
+    on: [
+      [L.PR1, C.BLUE, T.T1],
+      [L.PL1, C.BLUE, T.T1],
+    ],
+  },
+  {
+    note: '4F#',
+    on: [
+      [L.PR2, C.BLUE, T.T1],
+      [L.PL2, C.BLUE, T.T1],
+      [L.PR1, C.GREEN_LIGHT, T.T1],
+      [L.PL1, C.GREEN_LIGHT, T.T1],
+    ],
+  },
+];
+
+const m13: ShortScore = [
+  {
+    note: '4G',
+    on: [
+      [L.PR3, C.BLUE, T.T1],
+      [L.PL3, C.BLUE, T.T1],
+      [L.PR2, C.GREEN_LIGHT, T.T1],
+      [L.PL2, C.GREEN_LIGHT, T.T1],
+      [L.PR1, C.BLUE, T.T1],
+      [L.PL1, C.BLUE, T.T1],
+    ],
+  },
+  {
+    note: '4G',
+    on: [
+      [L.DOWN, C.BLUE, T.T1],
+      [L.PR3, C.GREEN_LIGHT, T.T1],
+      [L.PL3, C.GREEN_LIGHT, T.T1],
+      [L.PR2, C.BLUE, T.T1],
+      [L.PL2, C.BLUE, T.T1],
+      [L.PR1, C.GREEN_LIGHT, T.T1],
+      [L.PL1, C.GREEN_LIGHT, T.T1],
+    ],
+  },
+  {
+    note: '4G',
+    on: [
+      [L.UP, C.BLUE, T.T1],
+      [L.DOWN, C.GREEN_LIGHT, T.T1],
+      [L.PR3, C.BLUE, T.T1],
+      [L.PL3, C.BLUE, T.T1],
+      [L.PR2, C.GREEN_LIGHT, T.T1],
+      [L.PL2, C.GREEN_LIGHT, T.T1],
+      [L.PR1, C.BLUE, T.T1],
+      [L.PL1, C.BLUE, T.T1],
+    ],
+  },
+  {
+    note: '4F',
+    on: [
+      [L.UP, C.GREEN_LIGHT, T.T1],
+      [L.DOWN, C.BLUE, T.T1],
+      [L.PR3, C.GREEN_LIGHT, T.T1],
+      [L.PL3, C.GREEN_LIGHT, T.T1],
+      [L.PR2, C.BLUE, T.T1],
+      [L.PL2, C.BLUE, T.T1],
+      [L.PR1, C.GREEN_LIGHT, T.T1],
+      [L.PL1, C.GREEN_LIGHT, T.T1],
+    ],
+  },
+];
+
+const m14: ShortScore = [
+  {
+    note: '4G',
+    on: [
+      [L.TVT, C.BLUE, T.T5],
+      [L.SFA, C.GREEN_LIGHT, T.T5],
+    ],
+  },
+  {
+    note: '4B',
+    on: [
+      [L.SFR, C.BLUE, T.T1],
+      [L.SFL, C.BLUE, T.T1],
+    ],
+  },
+  {
+    note: '4G',
+    on: [
+      [L.BDR, C.BLUE, T.T5],
+      [L.BOOK, C.GREEN_LIGHT, T.T5],
+      [L.TVS, C.GREEN_LIGHT, T.T5],
+    ],
+  },
+];
+
+//export const score: Score = buildScoreFromSchortScoreMeasures(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14);
+
+export const score: Score = buildScoreFromSchortScoreMeasures(m12_partial, m13, m14);
