@@ -24,6 +24,7 @@ export const Times = {
   T5: {t: 5} as Time,
   T10: {t: 10} as Time,
   T20: {t: 20} as Time,
+  T30: {t: 30} as Time,
   T50: {t: 50} as Time,
 };
 
