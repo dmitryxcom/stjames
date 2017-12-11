@@ -22,8 +22,8 @@ know :)
 
 ## I mean, what is this, really?
 
-It's a uhm... webpage. That works only in Google Chrome browser (for it is
-[the only browser](https://caniuse.com/#feat=midi) to support Web MIDI API as of Dec 10, 2017).
+It's uhm... a webpage. That only work in Google Chrome(for it is [the only browser](https://caniuse.com/#feat=midi) to
+support Web MIDI API as of Dec 10, 2017).
 The page listens to MIDI events in a sequence, which this project allows to specify in an ~elegant~ manner and
 translates those MIDI events to HTTP requests to a Philips Hue Bridge, which this project also allows to specify
 in an ~elegant~ manner. The result is a light show for a song played on a MIDI controller.     
