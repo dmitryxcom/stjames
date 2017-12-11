@@ -10,7 +10,7 @@ The song is a simple arrangement of the
 [St. James Infirmary Blues (Wikipedia)](https://en.wikipedia.org/wiki/St._James_Infirmary_Blues)
  
 
-## What is this (and is not)
+## What this is (and is not)
 
 This is just a one-simple-song demo for a very specific configuration of lights and for a very specific
 score.
