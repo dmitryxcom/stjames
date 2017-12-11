@@ -8,7 +8,7 @@ const m1: ShortScore = [
     note: '4Eb',
     on: [
       [L.BOOK, C.WHITE, T.T5],
-      [ L.BDR, C.WHITE, T.T5],
+      [L.BDR, C.WHITE, T.T5],
     ],
   },
   {
