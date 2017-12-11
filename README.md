@@ -1,6 +1,6 @@
 # St. James Infirmary (for piano, Web MIDI API & Philips Hue) 
 
-A demo for writing MIDI score to control Philips Hue lights. 
+A demo for writing a MIDI score to control Philips Hue lights. 
 
 # Demo
 
