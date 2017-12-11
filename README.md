@@ -5,7 +5,7 @@ A demo for writing MIDI score to control Philips Hue lights.
 # Demo
 
 This is really just a one-simple-song demo for a very specific configuration of lights.
-The result, is captured in this poorly edited video: [YouTube](http://www.youtube.com/)
+The result, is captured in this poorly edited video: [YouTube](https://www.youtube.com/watch?v=xJ2nlYEM9ug)
 The song is a simple arrangement of the
 [St. James Infirmary Blues (Wikipedia)](https://en.wikipedia.org/wiki/St._James_Infirmary_Blues)
 
