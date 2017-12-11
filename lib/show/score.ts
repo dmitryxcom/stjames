@@ -1,5 +1,3 @@
-// define score type here
-
 import {LightChangeSet} from '../hue/hueapi';
 import {PitchCode} from '../midi/types';
 

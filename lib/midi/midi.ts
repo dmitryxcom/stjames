@@ -1,4 +1,3 @@
-// .js is becase TSC is fucking stupid.
 import {MIDI_INPUT_PORT_ID as INPUT_PORT_ID, MIDI_RANGE, DEBUG_MIDI_DATA} from "../config";
 import {MidiApi} from './midiapi';
 import {MidiApiConfig} from './types';
