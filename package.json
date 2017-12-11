@@ -1,0 +1,29 @@
+{
+  "name": "stjames",
+  "version": "1.0.0",
+  "description": "St. James Infirmary (for piano, Web MIDI API and Philips Hue)",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "philips-hue",
+    "philipshue",
+    "philips",
+    "hue",
+    "web-midi-api",
+    "web-midi",
+    "webmidi",
+    "webmidiapi",
+    "typescript"
+  ],
+  "author": "Dmytro Kossa",
+  "license": "MIT",
+  "dependencies": {
+    "requirejs": "^2.3.5"
+  },
+  "devDependencies": {}
+}
