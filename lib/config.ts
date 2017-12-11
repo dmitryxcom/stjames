@@ -12,4 +12,4 @@ export const HUE_ENABLE_DEBUG = false;
 
 // Show config.
 export const SHOW_ENABLE_DEBUG = false;
-export const SHOW_RESET_ON_PITCH = 21; // 0A
+export const SHOW_RESET_ON_PITCH = 21; //sour 0A
