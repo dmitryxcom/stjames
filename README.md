@@ -19,19 +19,16 @@ score to Philips Hue light changes.
 The example of this mapping looks like this:
 
 ```typescript
-// ShortScore is TS interface that makes writing the score
-// type checked and less of nightmare
+// ShortScore is TS interface that makes writing the score type checked and less of nightmare.
 const m3: ShortScore = [  // measure 3
   {
     note: '4Eb', // when E flat of the 4th octave is ..
     on: [ // pressed
       [L.SFR, C.BLUE, T.T2], // perform the light change
       // L is an enum of all the lights;
-      // C is a dictionary for all the Colors used in the
-      // light show, Color is expressed as a HL/brightness or
-      //  an (x, y) coordinate in the CIE 1931 color space
-      // (see Hue developers documentation for details); 
-      // T is timing objects for transitions
+      // C is a dictionary for all the Colors used in the light show, Color is expressed as a HL/brightness or an (x, y)
+      // coordinate in the CIE 1931 color space (see Hue developers documentation for details); 
+      // T is timing objects for transitions.
     ],
   },
   ...
