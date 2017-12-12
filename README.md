@@ -38,6 +38,16 @@ const m3: ShortScore = [  // measure 3
 ];
 ```
 
+The project consists of:
+- An abstraction over MIDI API that filters MIDI-messages leaving only notes and allows to specify a callback for
+  note-on and note-off events passing human readable strings, such as `3Ab` (meaning A-flat, third octave) instead of
+  MIDI codes.
+- An abstraction over Philips Hue API that allows to specify light changes with a bit of structure to them. It also
+  performs state diffs and state check to make sure to only send required changes (cause Bridge is slow and requires
+  optimization for light changes to propagate faster).
+- A "show director" that defines the structure for writing the light effects in terms of notes.
+- And an actual score used in the demo.   
+
 This is not meant to be reused as-is and is not written in a form of a reusable library. However,
 all that it would take to write another show is to modify the score found in `score/scoreconfig.ts` and
 `score/score.ts`. You can also make it into a reusable library (or, rather, a collection of) :)
@@ -47,9 +57,9 @@ I might do that some time if I ever going to write another score.
 
 It's uhm... a webpage. It only works in Google Chrome(for it is [the only browser](https://caniuse.com/#feat=midi) to
 support Web MIDI API as of Dec 10, 2017).
-The page listens to MIDI events in a sequence, which this project allows to specify in an ~elegant~ manner and
+The page listens to MIDI events in a sequence, which this project allows to specify in an *elegant* manner and
 translates those MIDI events to HTTP requests to a Philips Hue Bridge, which this project also allows to specify
-in an ~elegant~ manner. The result is a light show for a song played on a MIDI controller.     
+in an *elegant* manner. The result is a light show for a song played on a MIDI controller.     
 
 ### How to copy the setup
 
