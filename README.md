@@ -42,7 +42,8 @@ The project consists of:
 - An abstraction over Philips Hue API that allows to specify light changes with a bit of structure to them. It also
   performs state diffs and state check to make sure to only send required changes (cause Bridge is slow and requires
   optimization for light changes to propagate faster).
-- A "show director" that defines the structure for writing the light effects in terms of notes.
+- A "show director" that defines the structure for expressing light effect timing (and sequencing) in terms of notes
+  played.
 - And an actual score used in the demo.   
 
 This is not meant to be reused as-is and is not written in a form of a reusable library. However,
