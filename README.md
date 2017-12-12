@@ -4,25 +4,48 @@ A demo for writing a MIDI score to control Philips Hue lights.
 
 # Demo
 
-This is really just a one-simple-song demo for a very specific configuration of lights.
-The result, is captured in this poorly edited video: [YouTube](https://www.youtube.com/watch?v=xJ2nlYEM9ug)
-The song is a simple arrangement of the
-[St. James Infirmary Blues (Wikipedia)](https://en.wikipedia.org/wiki/St._James_Infirmary_Blues)
+Here is a simple piece demo for a very specific configuration of lights.
+The result, is captured in this *poorly edited* video: [YouTube](https://www.youtube.com/watch?v=xJ2nlYEM9ug)
+The piece itself is a simple arrangement of the
+[St. James Infirmary (Wikipedia)](https://en.wikipedia.org/wiki/St._James_Infirmary_Blues)
  
 
 ## What this is (and is not)
 
-This is just a one-simple-song demo for a very specific configuration of lights and for a very specific
-score.
+As noted above, the code is written specifically for this demo, that is for a specific configuration of lights and for a
+very specific score. It does not magically create any effects based on MIDI data. Instead, this allows to map a musical
+score to Philips Hue light changes.
+
+The example of this mapping looks like this:
+
+```typescript
+// ShortScore is TS interface that makes writing the score
+// type checked and less of nightmare
+const m3: ShortScore = [  // measure 3
+  {
+    note: '4Eb', // when E flat of the 4th octave is ..
+    on: [ // pressed
+      [L.SFR, C.BLUE, T.T2], // perform the light change
+      // L is an enum of all the lights;
+      // C is a dictionary for all the Colors used in the
+      // light show, Color is expressed as a HL/brightness or
+      //  an (x, y) coordinate in the CIE 1931 color space
+      // (see Hue developers documentation for details); 
+      // T is timing objects for transitions
+    ],
+  },
+  ...
+];
+```
+
 This is not meant to be reused as-is and is not written in a form of a reusable library. However,
 all that it would take to write another show is to modify the score found in `score/scoreconfig.ts` and
-`score/score.ts`. You can also make it into a reusable library (or a collection of) :)
-Although, I have some plans to make another one of these, and so if you are actually going to do that - please let me
-know :)
+`score/score.ts`. You can also make it into a reusable library (or, rather, a collection of) :)
+I might do that some time if I ever going to write another score.
 
 ## I mean, what is this, really?
 
-It's uhm... a webpage. That only work in Google Chrome(for it is [the only browser](https://caniuse.com/#feat=midi) to
+It's uhm... a webpage. It only works in Google Chrome(for it is [the only browser](https://caniuse.com/#feat=midi) to
 support Web MIDI API as of Dec 10, 2017).
 The page listens to MIDI events in a sequence, which this project allows to specify in an ~elegant~ manner and
 translates those MIDI events to HTTP requests to a Philips Hue Bridge, which this project also allows to specify
