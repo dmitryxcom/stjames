@@ -23,6 +23,7 @@
   "author": "Dmytro Kossa",
   "license": "MIT",
   "dependencies": {
+    "@types/webmidi": "^2.0.2",
     "requirejs": "^2.3.5"
   },
   "devDependencies": {}
